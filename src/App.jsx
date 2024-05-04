@@ -6,7 +6,12 @@ import {db} from "./data/db"
 function App() {
 
   //State
-  const [data, SetData] =useState(db)
+  const [data, SetData] = useState(db)
+  const [cart, setCart] = useState([])
+
+  function addCart(item) {
+    setCart(prevCart => [...prevCart, item])
+  }
 
   return (
     <>
@@ -17,8 +22,10 @@ function App() {
 
           {data.map((guitar) => (
             <Guitar
-              key={guitar.id} 
+              key={guitar.id}
               guitar = {guitar}
+              setCart={setCart}
+              addCart={addCart}
             />
           ))}
 
