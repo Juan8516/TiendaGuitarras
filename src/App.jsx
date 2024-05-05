@@ -1,6 +1,6 @@
 import { useState } from "react"
-import Guitar from "./Components/Guitar"
 import Header from "./Components/Header"
+import Guitar from "./Components/Guitar"
 import {db} from "./data/db"
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
           {data.map((guitar) => (
             <Guitar
               key={guitar.id}
-              guitar = {guitar}
+              guitar={guitar}
               setCart={setCart}
               addCart={addCart}
             />
