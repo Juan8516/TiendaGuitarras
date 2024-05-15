@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import Guitar from "./Guitar";
 
-export default function Header({cart}) {
+
+export default function Header({cart, removeFromCart}) {
 
 
     //State Derivado
@@ -70,6 +70,7 @@ export default function Header({cart}) {
                                                     <button
                                                         className="btn btn-danger"
                                                         type="button"
+                                                        onClick={() => removeFromCart(guitar.id)}
                                                     >
                                                         X
                                                     </button>
