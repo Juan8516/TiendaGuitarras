@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 
-export default function Header({cart, removeFromCart, increaseQuatity, decreaseQuality}) {
+export default function Header({cart, removeFromCart, increaseQuatity, decreaseQuality, clearCart}) {
 
 
     //State Derivado
@@ -82,7 +82,12 @@ export default function Header({cart, removeFromCart, increaseQuatity, decreaseQ
                                     </tbody>
                                 </table>
                                     <p className="text-end">Total pagar: <span className="fw-bold">${cartTotal}</span></p>
-                                    <button className="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
+                                    <button 
+                                        className="btn btn-dark w-100 mt-3 p-2"
+                                        onClick={clearCart}
+                                    >
+                                        Vaciar Carrito
+                                    </button>
                                 </>
                             )}
                         </div>
