@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Header from "./Components/Header"
 import Guitar from "./Components/Guitar"
 import {db} from "./data/db"
@@ -20,6 +20,10 @@ function App() {
       setCart([...cart, item])
     }
   }
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart))
+  }, [cart])
 
   function removeFromCart(id){
     setCart(prevCart => prevCart.filter(guitar => guitar.id !== id))
