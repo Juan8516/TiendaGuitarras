@@ -1,13 +1,18 @@
 import { useState, useEffect } from "react"
 import Header from "./Components/Header"
 import Guitar from "./Components/Guitar"
-import {db} from "./data/db"
+import { db } from "./data/db"
 
 function App() {
 
+  const initialCart = () => {
+    const localStorageCart = localStorage.getItem('cart')
+    return localStorageCart ? JSON.parse(localStorageCart) : []
+  }
+
   //State
-  const [data, SetData] = useState(db)
-  const [cart, setCart] = useState([])
+  const [data] = useState(db)
+  const [cart, setCart] = useState(initialCart)
 
   const MAX_ITEMS = 5
   const MIN_ITEMS = 1
