@@ -1,72 +1,10 @@
-import { useState, useEffect } from "react"
 import Header from "./Components/Header"
 import Guitar from "./Components/Guitar"
-import { db } from "./data/db"
+import { useCart } from "./hooks/useCart"
 
 function App() {
 
-  const initialCart = () => {
-    const localStorageCart = localStorage.getItem('cart')
-    return localStorageCart ? JSON.parse(localStorageCart) : []
-  }
-
-  //State
-  const [data] = useState(db)
-  const [cart, setCart] = useState(initialCart)
-
-  const MAX_ITEMS = 5
-  const MIN_ITEMS = 1
-  
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart))
-  }, [cart])
-
-  function addCart(item) {
-    const itemExists = cart.findIndex(guitar => guitar.id === item.id)
-    if(itemExists >= 0){
-      if(cart[itemExists].quantity >= MAX_ITEMS) return
-      const updateCart = [...cart]
-      updateCart[itemExists].quantity++
-      setCart(updateCart)
-    }else{
-      item.quantity = 1
-      setCart([...cart, item])
-    }
-  }
-
-  function removeFromCart(id){
-    setCart(prevCart => prevCart.filter(guitar => guitar.id !== id))
-  }
-
-  function increaseQuatity(id){
-    const updateCart = cart.map(item => {
-      if(item.id === id && item.quantity < MAX_ITEMS) {
-        return {
-          ...item,
-          quantity: item.quantity + 1
-        }
-      }
-      return item
-    })
-    setCart(updateCart)
-  }
-
-  function decreaseQuality(id) {
-    const updateCart = cart.map(item => {
-      if(item.id === id && item.quantity > MIN_ITEMS) {
-        return {
-          ...item,
-          quantity: item.quantity - 1
-        }
-      }
-      return item
-    })
-    setCart(updateCart)
-  }
-
-  function clearCart() {
-    setCart([])
-  }
+  const { data, cart, addCart, removeFromCart, increaseQuatity, decreaseQuality, clearCart, isEmpty, cartTotal } = useCart()
 
   return (
     <>
@@ -76,6 +14,8 @@ function App() {
       increaseQuatity={increaseQuatity}
       decreaseQuality={decreaseQuality}
       clearCart={clearCart}
+      isEmpty={isEmpty}
+      cartTotal={cartTotal}
     />
     <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
@@ -85,14 +25,12 @@ function App() {
             <Guitar
               key={guitar.id}
               guitar={guitar}
-              setCart={setCart}
               addCart={addCart}
             />
           ))}
 
         </div>
     </main>
-
 
     <footer className="bg-dark mt-5 py-5">
         <div className="container-xl">
